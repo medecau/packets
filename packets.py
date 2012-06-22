@@ -34,12 +34,6 @@ class Packet(object):
         self.sock.sendto(body)
 
 
-s=Server()
-while True:
-    r = s.next
-    if r.body == 'die':
-        break
-
 
 
 

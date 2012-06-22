@@ -12,13 +12,13 @@ with open('LICENSE') as f:
 
 setup(
     name='packets',
-    version=samplemod.__version__,
-    description='Sample package for me',
+    version=packets.__version__,
+    description='UDP for Humans',
     long_description=readme,
-    author=samplemod.__author__,
+    author=packets.__author__,
     author_email='medecau@gmail.com',
     url='http://medecau.github.com/samplemod',
     license=license,
-    packages=find_packages(exclude=('tests'))
+    packages=find_packages(exclude=('test'))
 )
 
