@@ -1,5 +1,7 @@
 #dev noise
 env
+dist
+*egg*
 *.pyc
 
 # osx noise
