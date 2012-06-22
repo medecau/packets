@@ -1,6 +1,9 @@
-
+from packets import Server
 s=Server()
 while True:
-    r = s.next
-    if r.body == 'die':
+    p = s.next
+    if p.body == 'die':
+        p.reply('Bye.')
         break
+    elif p.body == 'ping':
+        p.reply('pong')

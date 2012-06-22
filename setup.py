@@ -17,7 +17,7 @@ setup(
     long_description=readme,
     author=packets.__author__,
     author_email='medecau@gmail.com',
-    url='http://medecau.github.com/samplemod',
+    url='http://medecau.github.com/packets',
     license=license,
     packages=find_packages(exclude=('test'))
 )

@@ -19,7 +19,7 @@ class Server(object):
     """
     def __init__(self, host='localhost', port=9999):
         self.server=BaseServer(("localhost", 9999), BaseRequestHandler)
-        self.server.timeout = 1
+        self.server.timeout = 0.1
     
     @property
     def next(self):
@@ -27,11 +27,12 @@ class Server(object):
 
 class Packet(object):
     def __init__(self, s):
+        self.s = s
         self.body = s[0][0]
         self.sock = s[0][1]
-        self.addr = s[1][0]
+        self.addr = s[1]
     def reply(self, body):
-        self.sock.sendto(body)
+        self.sock.sendto(body, self.addr)
 
 
 
