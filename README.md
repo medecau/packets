@@ -2,21 +2,29 @@
 
     pip install packets
 
-# Use
+# Use for clients
 
-    from packets import Server
-    s=Server()
-    while True:
-        p = s.next
-        if p.body == 'die':
-            p.reply('Bye.')
-            break
-        elif p.body == 'ping':
-            p.reply('pong')
+        import packets
 
-# Documantation
+        client = packets.User()
+        client.sendto((server.host, server.port), 'Hi!')
+        print client.next.body
+
+# Use for servers
+
+        import packets
+
+        server = packets.User()
+        packet = server.next
+        if packet.body == 'ping':
+            packet.reply('pong')
+        
+
+# Documentation
 
 *To be written*
+
+Meanwhile take a look at the [source code](https://github.com/medecau/packets/blob/master/packets.py).
 
 # Bugs & Co.
 
