@@ -1,6 +1,5 @@
 from SocketServer import UDPServer
 from SocketServer import BaseRequestHandler
-from random import randint
 
 class BaseServer(UDPServer):
     """
