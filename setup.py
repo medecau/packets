@@ -7,7 +7,7 @@ with open('LICENSE') as f:
 
 setup(
     name='packets',
-    version='0.0.7',
+    version='0.0.8',
     description='UDP for Humans',
     author='Pedro Rodrigues',
     author_email='medecau@gmail.com',
@@ -15,6 +15,5 @@ setup(
     license=license,
     py_modules=['packets',],
     packages=find_packages(exclude=('test')),
-    #install_requires=['clint',],
 )
 
