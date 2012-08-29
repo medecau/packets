@@ -26,6 +26,8 @@ class User(object):
     def __init__(self, host='localhost', port=9999):
         self.server=BaseServer((host, port), BaseRequestHandler)
         self.server.timeout = 0.1
+        self.server.allow_reuse_address = True
+        self.server.request_queue_size = 5
     
     def sendto(self, addr, data):
         self.server.socket.sendto(data, addr)
@@ -47,13 +49,31 @@ class User(object):
         return self.addr[1]
 
 class Packet(object):
-    def __init__(self, p=None):
-        if p:
-            self.package = p
-            self.body = p[0][0].strip()
-            self.sock = p[0][1]
-            self.addr = p[1]
+    """
+        UDP packet wrapper.
+        
+        It's a wrapper that still gives you access to everything.
+        
+        self.packet is the original package
+        
+        and allows for simple replies with self.reply()
+    """
+    def __init__(self, packet):
+        self.packet = packet
     
     def reply(self, body):
         self.sock.sendto(body, self.addr)
+    
+    @property
+    def body(self):
+        return self.packet[0][0].strip()
+    
+    @property
+    def sock(self):
+        return self.packet[0][1]
+    
+    @property
+    def addr(self):
+        return self.packet[1]
+    
     
