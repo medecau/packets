@@ -4,7 +4,7 @@ from random import randint
 
 class BaseServer(UDPServer):
     """
-        Local modification to UDPServer
+        This is where we add/change functionality to UDPServer.
     """
     def next(self):
         next = self.get_request()
@@ -12,13 +12,20 @@ class BaseServer(UDPServer):
 
 class User(object):
     """
-        Interface to BaseServer()
+        This wraps BaseServer with an interface for humans.
+        
+        Because we are all consenting adults,
+        you still have lots of power!
+        
+        self.server gives you direct access to the BaseServer
+        subclass and all its interesting funcionality.
+        
+        self.server.socket gives direct access to the socket
+        
     """
     def __init__(self, host='localhost', port=9999):
         self.server=BaseServer((host, port), BaseRequestHandler)
         self.server.timeout = 0.1
-        self.addr = self.server.socket.getsockname()
-        self.host, self.port = self.addr
     
     def sendto(self, addr, data):
         self.server.socket.sendto(data, addr)
@@ -26,6 +33,18 @@ class User(object):
     @property
     def next(self):
         return Packet(self.server.next())
+    
+    @property
+    def addr(self):
+        return self.server.socket.getsockname()
+    
+    @property
+    def host(self):
+        return self.addr[0]
+    
+    @property
+    def port(self):
+        return self.addr[1]
 
 class Packet(object):
     def __init__(self, p=None):
