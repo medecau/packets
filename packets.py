@@ -8,7 +8,6 @@ class BaseServer(UDPServer):
     """
     def next(self):
         next = self.get_request()
-        self.handle_request
         return next
 
 class User(object):
