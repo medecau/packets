@@ -1,3 +1,4 @@
+from json import loads
 from SocketServer import UDPServer
 from SocketServer import BaseRequestHandler
 
@@ -66,6 +67,10 @@ class Packet(object):
     @property
     def body(self):
         return self.packet[0][0].strip()
+
+    @property
+    def json(self):
+        return loads(self.body)
     
     @property
     def sock(self):
