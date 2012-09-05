@@ -1,4 +1,6 @@
 from json import loads
+from random import randint
+import socket
 from SocketServer import UDPServer
 from SocketServer import BaseRequestHandler
 
@@ -23,8 +25,21 @@ class User(object):
         self.server.socket gives direct access to the socket
         
     """
-    def __init__(self, host='localhost', port=9999):
-        self.server=BaseServer((host, port), BaseRequestHandler)
+    def __init__(self, host='localhost', port=None):
+        if port == None:
+            port = randint(49152, 65535) # IANA ephemeral ports
+            ephemeral = True
+        else:
+            ephemeral = False
+        while True:
+            try:
+                self.server=BaseServer((host, port), BaseRequestHandler)
+                break
+            except socket.error, e:
+                if ephemeral and e.errno == 48:
+                    port = randint(49152, 65535) # IANA ephemeral ports
+                else:
+                    raise e
         self.server.timeout = 0.1
         self.server.allow_reuse_address = True
         self.server.request_queue_size = 5
@@ -34,7 +49,7 @@ class User(object):
     
     @property
     def next(self):
-        return Packet(self.server.next())
+        return Packet(self.server.next(), self)
     
     @property
     def addr(self):
@@ -58,11 +73,12 @@ class Packet(object):
         
         and allows for simple replies with self.reply()
     """
-    def __init__(self, packet):
+    def __init__(self, packet, user):
         self.packet = packet
+        self.user = user
     
-    def reply(self, body):
-        self.sock.sendto(body, self.addr)
+    def reply(self, data):
+        self.user.sendto(self.addr, data)
     
     @property
     def body(self):
