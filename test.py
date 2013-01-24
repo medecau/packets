@@ -12,10 +12,11 @@ packet = server.next
 print packet.body
 
 # USING THAT PACKAGE THE SERVER CAN REPLY
-packet.reply('Hey!')
+packet.reply('{"msg": "Hey!"}')
 
 # AND THE CLIENT GETS THE RESPONSE
-print client.next.body
+reply = client.next.json
+print reply['msg']
 
 # TEST EXCEPTION FOR LARGE PACKETS
 #client.sendto((server.host, server.port), '0'*256*256)
