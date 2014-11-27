@@ -11,7 +11,7 @@ setup(
     description='UDP for Humans',
     author='Pedro Rodrigues',
     author_email='medecau@gmail.com',
-    url='http://medecau.github.com/packets',
+    url='http://medecau.github.io/packets',
     license=license,
     py_modules=['packets',],
     packages=find_packages(exclude=('test')),
